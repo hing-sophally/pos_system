@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% block content %}
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Edit Product</h3>
+                </div>
+                <div class="box-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Category Name</label>
+                            <input type="text" name="name" id="name" class="form-control"
+                                value="{{ category.name }}" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <a href="{% url 'index' %}" class="btn btn-default">Back</a>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock %}
