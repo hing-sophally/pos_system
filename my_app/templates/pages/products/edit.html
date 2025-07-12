@@ -1,4 +1,6 @@
 {% extends "index.html" %}
+{% load static %}
+
 {% block content %}
 <section class="content">
     <div class="row">
@@ -8,15 +10,60 @@
                     <h3 class="box-title">Edit Product</h3>
                 </div>
                 <div class="box-body">
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="name">Category Name</label>
+                            <label for="name">Product Name</label>
                             <input type="text" name="name" id="name" class="form-control"
-                                value="{{ category.name }}" required>
+                                   value="{{ product.name }}" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="barcode">Barcode</label>
+                            <input type="text" name="barcode" id="barcode" class="form-control"
+                                   value="{{ product.barcode }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sale_price">Sale Price</label>
+                            <input type="number" name="sale_price" id="sale_price" class="form-control"
+                                   value="{{ product.sale_price }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stock">Stock</label>
+                            <input type="number" name="stock" id="stock" class="form-control"
+                                   value="{{ product.unit_stock }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category_id">Category</label>
+                            <select name="category_id" id="category_id" class="form-control" required>
+                                {% for item in categories %}
+                                    <option value="{{ item.id }}"
+                                        {% if item.id == product.category_id %}selected{% endif %}>
+                                        {{ item.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Current Photo</label><br>
+                            {% if product.photo %}
+                                <img src="{{ product.photo.url }}" width="100">
+                            {% else %}
+                                <p>No photo uploaded</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="photo">Change Photo</label>
+                            <input type="file" name="photo" id="photo" class="form-control">
+                        </div>
+
                         <button type="submit" class="btn btn-success">Update</button>
-                        <a href="{% url 'index' %}" class="btn btn-default">Back</a>
+                        <a href="/product/index/" class="btn btn-default">Back</a>
                     </form>
                 </div>
             </div>

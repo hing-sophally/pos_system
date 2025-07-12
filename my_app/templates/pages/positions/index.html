@@ -8,9 +8,9 @@
             <div class="box box-success">
                 <div class="box-header">
                     <i class="fa fa-list"></i>
-                    <h3 class="box-title">Product List</h3>
-                    <a href="{% url 'product_show' %}" class="btn btn-success pull-right">
-                        <i class="fa fa-plus"></i> New Product
+                    <h3 class="box-title">position List</h3>
+                    <a href="{% url 'position_create' %}" class="btn btn-success pull-right">
+                        <i class="fa fa-plus"></i> New position
                     </a>
                 </div>
 
@@ -19,36 +19,22 @@
                         <thead>
                             <tr>
                                 <th style="width: 50px;">#</th>
-                                <th>Product Name</th>
-                                <th>Barcode</th>
-                                <th>SalePrice</th>
-                                <th>Stock</th>
-                                <th>Photo</th>
+                                <th>position Name</th>
                                 <th style="width: 180px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for product in products %}
+                            {% for positions in position %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ product.name }}</td>
-                                    <td>{{ product.barcode }}</td>
-                                    <td>{{ product.sale_price }}</td>
-                                    <td>{{ product.unit_stock }}</td>
+                                    <td>{{ positions.name }}</td>
                                     <td>
-                                      {% if product.photo %}
-                                            <img src="{{ product.photo }}" width="50" height="50">
-                                      {% else %}
-                                        <span>No Image</span>
-                                      {% endif %}
-                                    </td>
-                                    <td>
-                                        <a href="{% url 'product_edit' product.id %}" class="btn btn-xs btn-primary">
+                                        <a href="{% url 'position_edit' positions.id %}" class="btn btn-xs btn-primary">
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
                                         <a href="#"
                                            class="btn btn-xs btn-danger btn-delete"
-                                           data-url="{% url 'product_delete' product.id %}">
+                                           data-url="{% url 'position_delete' positions.id %}">
                                            <i class="fa fa-trash"></i> Delete
                                         </a>
 
@@ -56,7 +42,7 @@
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="3" class="text-center">No product found.</td>
+                                    <td colspan="3" class="text-center">No positions found.</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
