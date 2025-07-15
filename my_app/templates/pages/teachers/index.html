@@ -28,6 +28,8 @@
                                 <th>Major</th>
                                 <th>Photo</th>
                                 <th>Created At</th>
+                                <th>Created By</th>
+                                <th>Updated By</th>
                                 <th>Updated At</th>
                                 <th style="width: 180px;">Actions</th>
                             </tr>
@@ -66,6 +68,21 @@
                                         <small class="text-muted">{{ teacher.updateAt|localtime|time:"h:i A"  }}</small>
 
                                     </td>
+                                    <td>
+                                        {% if teacher.createBy %}
+                                            {{ teacher.createBy.username }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if teacher.updateBy %}
+                                            {{ teacher.updateBy.username }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+
                                     <td>
                                         <a href="{% url 'teacher_edit' teacher.id %}" class="btn btn-xs btn-primary">
                                             <i class="fa fa-edit"></i> Edit

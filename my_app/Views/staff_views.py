@@ -48,35 +48,36 @@ def staff_create(request):
 @login_required
 
 def staff_edit(request, id):
-    staffs = get_object_or_404(Staff, id=id)
+    staff = get_object_or_404(Staff, id=id)
     positions = Position.objects.all()
 
     if request.method == 'POST':
-        staffs.first_name = request.POST.get('first_name')
-        staffs.last_name = request.POST.get('last_name')
-        staffs.gender = request.POST.get('gender')
-        staffs.date_of_birth = request.POST.get('date_of_birth')
-        staffs.position = request.POST.get('position')
-        staffs.photo = request.FILES.get('photo')
-        staffs.position = request.POST.get('position_id')
+        staff.first_name = request.POST.get('first_name')
+        staff.last_name = request.POST.get('last_name')
+        staff.gender = request.POST.get('gender')
+        staff.date_of_birth = request.POST.get('date_of_birth')
+        position_id = request.POST0.get('position_id')
+
+        if position_id:
+            staff.position = Position.objects.get(id=position_id)
+
         # Check if new photo uploaded
         if 'photo' in request.FILES:
             new_photo = request.FILES['photo']
 
             # Delete old photo if exists
-            if staffs.photo:
-                old_path = os.path.join(settings.MEDIA_ROOT, str(staffs.photo))
+            if staff.photo:
+                old_path = os.path.join(settings.MEDIA_ROOT, str(staff.photo))
                 if os.path.exists(old_path):
                     os.remove(old_path)
 
             # Replace with new photo
-            staffs.photo = new_photo
+            staff.photo = new_photo
 
-        staffs.save()
+        staff.save()
         return redirect('index_staff')
 
-    return render(request, 'pages/staffs/edit.html', {'product': staffs, 'staffs': staffs})
-
+    return render(request, 'pages/staffs/edit.html', {'staff': staff, 'positions': positions})
 @login_required
 
 def staff_delete(request, id):

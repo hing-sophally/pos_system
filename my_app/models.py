@@ -22,12 +22,12 @@ class Position(models.Model):
 
 
 class Staff(models.Model):
-    last_name = models.CharField(max_length=20, null=False, blank=False, unique=True)
-    first_name = models.CharField(max_length=20, null=False, blank=False, unique=True)
-    gender = models.CharField(max_length=20, null=False, blank=False, unique=True)
-    date_of_birth = models.DateField(null=False, blank=False, unique=True)
+    last_name = models.CharField(max_length=20, null=False, blank=False )
+    first_name = models.CharField(max_length=20, null=False, blank=False)
+    gender = models.CharField(max_length=20, null=False, blank=False)
+    date_of_birth = models.DateField(null=False, blank=False)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to='staff/', null=False, blank=False, unique=True)
+    photo = models.ImageField(upload_to='staff/', null=False, blank=False)
 
 
 class Major(models.Model):

@@ -40,7 +40,7 @@ def teacher_create(request):
             major_id=major_id if major_id else None,
             photo=photo,
             createBy=request.user if request.user.is_authenticated else None,
-            updateBy=request.user if request.user.is_authenticated else None,
+            # updateBy=request.user if request.user.is_authenticated else None,
         )
         return redirect('index_teacher')  # Adjust to your URL name
 
