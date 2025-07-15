@@ -1,19 +1,24 @@
 import os
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from my_app.models import Major, Teacher  # Adjust app name if different
 from django.contrib.auth.models import User
+
+@login_required
 
 def index(request):
     majors = Major.objects.all()
     teachers = Teacher.objects.all()
     return render(request, "pages/teachers/index.html", {"teachers": teachers, "majors": majors})
 
+@login_required
 
 def show(request):
     majors = Major.objects.all()
     return render(request, 'pages/teachers/create.html', {"majors": majors})
 
+@login_required
 
 def teacher_create(request):
     majors = Major.objects.all()
@@ -41,6 +46,7 @@ def teacher_create(request):
 
     return render(request, 'pages/teachers/create.html', {"majors": majors})
 
+@login_required
 
 def teacher_edit(request, id):
     teacher = get_object_or_404(Teacher, id=id)
@@ -73,6 +79,7 @@ def teacher_edit(request, id):
 
     return render(request, 'pages/teachers/edit.html', {'teacher': teacher, 'majors': majors})
 
+@login_required
 
 def teacher_delete(request, id):
     teacher = get_object_or_404(Teacher, id=id)

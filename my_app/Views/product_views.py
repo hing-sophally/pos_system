@@ -1,18 +1,22 @@
 import os
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from my_app.models import Category, Product
 
+@login_required
 
 def index(request):
     products = Product.objects.all()
     return render(request, "pages/products/index.html", {"products": products})
 
+@login_required
 
 def show(request):
     categories = Category.objects.all()
     return render(request, 'pages/products/create.html', {"categories": categories})
 
+@login_required
 
 def product_create(request):
     categories = Category.objects.all()
@@ -38,6 +42,7 @@ def product_create(request):
 
 
 
+@login_required
 
 def product_edit(request, id):
     product = get_object_or_404(Product, id=id)
@@ -68,6 +73,7 @@ def product_edit(request, id):
 
     return render(request, 'pages/products/edit.html', {'product': product, 'categories': categories})
 
+@login_required
 
 def product_delete(request, id):
     product = get_object_or_404(Product, id=id)

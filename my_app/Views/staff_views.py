@@ -1,20 +1,24 @@
 import os
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from my_app.models import Category, Product, Staff, Position
 
+@login_required
 
 def index(request):
     positions = Position.objects.all()
     staffs = Staff.objects.all()
     return render(request, "pages/staffs/index.html", {"staffs": staffs , "positions": positions})
 
+@login_required
 
 def show(request):
     positions = Position.objects.all()
     staffs = Staff.objects.all()
     return render(request, 'pages/staffs/create.html', {"staffs": staffs , "positions": positions})
 
+@login_required
 
 def staff_create(request):
     staffs = Staff.objects.all()
@@ -41,6 +45,7 @@ def staff_create(request):
 
 
 
+@login_required
 
 def staff_edit(request, id):
     staffs = get_object_or_404(Staff, id=id)
@@ -72,6 +77,7 @@ def staff_edit(request, id):
 
     return render(request, 'pages/staffs/edit.html', {'product': staffs, 'staffs': staffs})
 
+@login_required
 
 def staff_delete(request, id):
     staffs = get_object_or_404(Staff, id=id)

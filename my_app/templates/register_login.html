@@ -233,7 +233,7 @@ createApp({
           this.messageColor = "red";
           return;
         }
-        axios.post('/api/auth/register', this.registerForm)
+        axios.post('/api/auth/register/', this.registerForm)
           .then(res => {
             this.message = "Registration successful!";
             this.messageColor = "green";
@@ -247,7 +247,7 @@ createApp({
           });
       } else {
         // Login
-        axios.post('/api/auth/login', this.loginForm)
+        axios.post('/api/auth/login/', this.loginForm)
           .then(res => {
             this.message = "Login successful!";
             this.messageColor = "green";

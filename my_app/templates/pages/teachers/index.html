@@ -19,7 +19,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th style="width: 50px;">#</th>
+                                <th style="width: 50px;">Nº</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Gender</th>
@@ -35,7 +35,8 @@
                         <tbody>
                             {% for teacher in teachers %}
                                 <tr>
-                                    <td>{{ forloop.counter }}</td>
+{#                                    <td>{{ forloop.counter }}</td>#}
+                                    <td>tec_{{ teacher.id|stringformat:"04d" }}</td>
                                     <td>{{ teacher.firstName }}</td>
                                     <td>{{ teacher.lastName }}</td>
                                     <td>{{ teacher.get_gender_display }}</td>

@@ -18,7 +18,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th style="width: 50px;">#</th>
+                                <th style="width: 50px;">Nº</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Gender</th>
@@ -31,12 +31,18 @@
                         <tbody>
                             {% for staff in staffs %}
                                 <tr>
-                                    <td>{{ forloop.counter }}</td>
+                                    <td>stf_{{ staff.id|stringformat:"04d" }}</td>
                                     <td>{{ staff.first_name }}</td>
                                     <td>{{ staff.last_name }}</td>
                                     <td>{{ staff.gender }}</td>
                                     <td>{{ staff.date_of_birth }}</td>
-                                    <td>{{ staff.position_id }}</td>
+                                    <td>
+                                        {% if staff.position %}
+                                            {{ staff.position.name }}
+                                        {% else %}
+                                            No Position
+                                        {% endif %}
+                                    </td>
                                     <td>
                                       {% if staff.photo %}
                                             <img src="{{ staff.photo.url }}" width="50" height="50">
