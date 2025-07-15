@@ -6,8 +6,8 @@
         <!-- search form -->
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
+        {% if user.is_authenticated and user.is_superuser %}
         <ul class="sidebar-menu">
-            <li class="header" style="color: white">MAIN NAVIGATION</li>
             <li class="treeview">
                 <a href="/category/index">
                     <i class="fa fa-dashboard"></i> <span>Categorys</span> <i
@@ -79,6 +79,12 @@
                 </ul>
             </li>
         </ul>
+        {% else %}
+        <!-- Empty sidebar for non-superuser or unauthenticated users -->
+        <ul class="sidebar-menu">
+            <!-- No menu items displayed -->
+        </ul>
+        {% endif %}
     </section>
     <!-- /.sidebar -->
 </aside>
@@ -88,87 +94,90 @@ document.addEventListener('DOMContentLoaded', function() {
     const treeviewItems = document.querySelectorAll('.treeview');
     const subMenuLinks = document.querySelectorAll('.treeview-menu a');
 
-    // Function to set active menu based on current URL
-    function setActiveMenuFromURL() {
-        const currentPath = window.location.pathname;
+    // Only run the menu functionality if there are menu items
+    if (treeviewItems.length > 0) {
+        // Function to set active menu based on current URL
+        function setActiveMenuFromURL() {
+            const currentPath = window.location.pathname;
 
-        // Remove all active classes first
+            // Remove all active classes first
+            treeviewItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelectorAll('.treeview-menu li').forEach(subItem => {
+                subItem.classList.remove('active');
+            });
+
+            // Find and activate the current menu item
+            subMenuLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    const parentTreeview = link.closest('.treeview');
+                    const currentSubMenuItem = link.closest('li');
+
+                    // Make parent treeview active
+                    parentTreeview.classList.add('active');
+
+                    // Make current submenu item active
+                    currentSubMenuItem.classList.add('active');
+                }
+            });
+        }
+
+        // Set active menu on page load
+        setActiveMenuFromURL();
+
+        // Handle main menu toggle clicks
         treeviewItems.forEach(item => {
-            item.classList.remove('active');
-        });
-        document.querySelectorAll('.treeview-menu li').forEach(subItem => {
-            subItem.classList.remove('active');
+            const mainLink = item.querySelector('a');
+
+            mainLink.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const parentLi = this.closest('.treeview');
+                const isCurrentlyActive = parentLi.classList.contains('active');
+
+                // Remove active class from all treeview items
+                treeviewItems.forEach(treeItem => {
+                    treeItem.classList.remove('active');
+                });
+
+                // Remove active class from all submenu items
+                document.querySelectorAll('.treeview-menu li').forEach(subItem => {
+                    subItem.classList.remove('active');
+                });
+
+                // If it wasn't active before, make it active
+                if (!isCurrentlyActive) {
+                    parentLi.classList.add('active');
+                }
+            });
         });
 
-        // Find and activate the current menu item
+        // Handle submenu item clicks
         subMenuLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                const parentTreeview = link.closest('.treeview');
-                const currentSubMenuItem = link.closest('li');
+            link.addEventListener('click', function(e) {
+                const parentTreeview = this.closest('.treeview');
+                const currentSubMenuItem = this.closest('li');
+
+                // Remove active class from all treeview items
+                treeviewItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // Remove active class from all submenu items
+                document.querySelectorAll('.treeview-menu li').forEach(subItem => {
+                    subItem.classList.remove('active');
+                });
 
                 // Make parent treeview active
                 parentTreeview.classList.add('active');
 
                 // Make current submenu item active
                 currentSubMenuItem.classList.add('active');
-            }
+
+                // Let the browser navigate normally
+            });
         });
     }
-
-    // Set active menu on page load
-    setActiveMenuFromURL();
-
-    // Handle main menu toggle clicks
-    treeviewItems.forEach(item => {
-        const mainLink = item.querySelector('a');
-
-        mainLink.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const parentLi = this.closest('.treeview');
-            const isCurrentlyActive = parentLi.classList.contains('active');
-
-            // Remove active class from all treeview items
-            treeviewItems.forEach(treeItem => {
-                treeItem.classList.remove('active');
-            });
-
-            // Remove active class from all submenu items
-            document.querySelectorAll('.treeview-menu li').forEach(subItem => {
-                subItem.classList.remove('active');
-            });
-
-            // If it wasn't active before, make it active
-            if (!isCurrentlyActive) {
-                parentLi.classList.add('active');
-            }
-        });
-    });
-
-    // Handle submenu item clicks
-    subMenuLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const parentTreeview = this.closest('.treeview');
-            const currentSubMenuItem = this.closest('li');
-
-            // Remove active class from all treeview items
-            treeviewItems.forEach(item => {
-                item.classList.remove('active');
-            });
-
-            // Remove active class from all submenu items
-            document.querySelectorAll('.treeview-menu li').forEach(subItem => {
-                subItem.classList.remove('active');
-            });
-
-            // Make parent treeview active
-            parentTreeview.classList.add('active');
-
-            // Make current submenu item active
-            currentSubMenuItem.classList.add('active');
-
-            // Let the browser navigate normally
-        });
-    });
 });
 </script>
