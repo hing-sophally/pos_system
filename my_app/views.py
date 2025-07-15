@@ -8,13 +8,34 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 
+from my_app.models import Category, Product, Staff, Teacher, Major, Position
 from my_app.serializers import RegisterSerializer, LoginSerializer
 
 
 # Basic views
 @login_required
 def home(request):
-    return render(request, "index.html")
+    categories = Category.objects.all()
+    products = Product.objects.all()
+    staff_members = Staff.objects.all()
+    teachers = Teacher.objects.all()
+    users = User.objects.all()
+    majors = Major.objects.all()
+    positions = Position.objects.all()
+
+
+    context = {
+        'categories': categories,
+        'products': products,
+        'staff_members': staff_members,
+        'teachers': teachers,
+        'users': users,
+        'majors': majors,
+        'positions': positions,
+
+
+    }
+    return render(request, "dashboard.html", context)
 
 
 def content(request):

@@ -1,0 +1,174 @@
+{% extends "index.html" %}
+{% load tz %}
+{% load static %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Categories Card -->
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="info-box custom-info-box">
+                    <span class="info-box-icon bg-primary" style="background: #0d6aad !important;">
+                        <i class="fa fa-th-large"  style="color:white !important;"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text" style="font-weight: bold">Categories</span>
+                        <span class="info-box-number">{{ categories|length }}</span>
+                        <span class="info-box-more">Total Categories</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Card -->
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="info-box custom-info-box">
+                    <span class="info-box-icon bg-success" style="background: green !important;">
+                        <i class="fa fa-cube" style="color:white !important;"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text" style="font-weight: bold">Products</span>
+                        <span class="info-box-number">{{ products|length }}</span>
+                        <span class="info-box-more" >Total Products</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staff Members Card -->
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="info-box custom-info-box">
+                    <span class="info-box-icon bg-warning" style="background: gold !important;">
+                        <i class="fa fa-users" style="color:white !important;"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text" style="font-weight: bold">Staff Members</span>
+                        <span class="info-box-number">{{ staff_members|length }}</span>
+                        <span class="info-box-more" >Total Staff</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Staff Members Card -->
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="info-box custom-info-box">
+                    <span class="info-box-icon bg-warning" style="background: darkmagenta !important;">
+                        <i class="fa fa-users" style="color:white !important;"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text" style="font-weight: bold">Staff Members</span>
+                        <span class="info-box-number">{{ users|length }}</span>
+                        <span class="info-box-more" >Total Staff</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Staff Members Card -->
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="info-box custom-info-box">
+                    <span class="info-box-icon bg-warning" style="background: darkblue !important;">
+                        <i class="fa fa-users" style="color:white !important;"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text" style="font-weight: bold">Staff Members</span>
+                        <span class="info-box-number">{{ majors|length }}</span>
+                        <span class="info-box-more" >Total Staff</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Staff Members Card -->
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="info-box custom-info-box">
+                    <span class="info-box-icon bg-warning" style="background: darkred !important;">
+                        <i class="fa fa-users" style="color:white !important;"></i>
+                    </span>
+                    <div class="info-box-content">
+                        <span class="info-box-text" style="font-weight: bold">Staff Members</span>
+                        <span class="info-box-number">{{ positions|length }}</span>
+                        <span class="info-box-more" >Total Staff</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block extra_css %}
+<style>
+/* Custom styles for AdminLTE info boxes */
+.custom-info-box {
+    border-radius: 8px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    background: #ffffff !important;
+}
+
+.custom-info-box:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.custom-info-box .info-box-icon {
+    border-radius: 8px 0 0 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 80px !important;
+}
+
+.custom-info-box .info-box-icon i {
+    font-size: 1.8rem !important;
+}
+
+.custom-info-box .info-box-content {
+    padding: 15px 20px !important;
+}
+
+.custom-info-box .info-box-text {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: #6c757d !important;
+    margin-bottom: 5px !important;
+}
+
+.custom-info-box .info-box-number {
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    color: #343a40 !important;
+    line-height: 1.2 !important;
+}
+
+.custom-info-box .info-box-more {
+    font-size: 0.8rem !important;
+    color: #6c757d !important;
+    font-weight: 400 !important;
+    margin-top: 5px !important;
+    display: block !important;
+}
+
+/* Color adjustments for better contrast */
+.custom-info-box .bg-primary {
+    background-color: #007bff !important;
+}
+
+.custom-info-box .bg-success {
+    background-color: #28a745 !important;
+}
+
+.custom-info-box .bg-warning {
+    background-color: #ffc107 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .custom-info-box .info-box-number {
+        font-size: 1.8rem !important;
+    }
+
+    .custom-info-box .info-box-content {
+        padding: 10px 15px !important;
+    }
+}
+</style>
+{% endblock extra_css %}
