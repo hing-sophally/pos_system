@@ -12,7 +12,7 @@ def category_create(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         Category.objects.create(name=name)
-        return redirect('index')  # <-- redirect to route name 'index'
+        return redirect('index_category')  # <-- redirect to route name 'index'
     return render(request, 'pages/categories/create.html')
 
 
@@ -21,11 +21,11 @@ def category_edit(request, id):
     if request.method == 'POST':
         category.name = request.POST.get('name')
         category.save()
-        return redirect('index')
+        return redirect('index_category')
     return render(request, 'pages/categories/edit.html', {'category': category})
 
 
 def category_delete(request, id):
     category = get_object_or_404(Category, id=id)
     category.delete()
-    return redirect('index')
+    return redirect('index_category')

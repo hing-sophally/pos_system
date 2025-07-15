@@ -8,50 +8,167 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header" style="color: white">MAIN NAVIGATION</li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Category</span> <i
+            <li class="treeview">
+                <a href="/category/index">
+                    <i class="fa fa-dashboard"></i> <span>Categorys</span> <i
                         class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="/category/index"><i class="fa fa-circle-o"></i> All Category</a></li>
-                    <li class="active"><a href="/category/create"><i class="fa fa-circle-o"></i> Add New Category</a>
-                    </li>
+                    <li><a href="/category/create"><i class="fa fa-circle-o"></i> Add New Category</a></li>
                 </ul>
             </li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Product</span> <i
+            <li class="treeview">
+                <a href="/product/index">
+                    <i class="fa fa-dashboard"></i> <span>Products</span> <i
                         class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="/product/index"><i class="fa fa-circle-o"></i> All Product</a></li>
-                    <li class="active"><a href="/product/create"><i class="fa fa-circle-o"></i> Add New Product</a></li>
+                    <li><a href="/product/create"><i class="fa fa-circle-o"></i> Add New Product</a></li>
                 </ul>
             </li>
-            </li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Staff</span> <i
+            <li class="treeview">
+                <a href="/staff/index">
+                    <i class="fa fa-dashboard"></i> <span>Staffs</span> <i
                         class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="/staff/index"><i class="fa fa-circle-o"></i> All Staff</a></li>
-                    <li class="active"><a href="/staff/create"><i class="fa fa-circle-o"></i> Add New Staff</a></li>
+                    <li><a href="/staff/create"><i class="fa fa-circle-o"></i> Add New Staff</a></li>
                 </ul>
             </li>
-            </li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Position</span> <i
+            <li class="treeview">
+                <a href="/position/index">
+                    <i class="fa fa-dashboard"></i> <span>Positions</span> <i
                         class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="/position/index"><i class="fa fa-circle-o"></i> All Position</a></li>
-                    <li class="active"><a href="/position/create"><i class="fa fa-circle-o"></i> Add New Position</a></li>
+                    <li><a href="/position/create"><i class="fa fa-circle-o"></i> Add New Position</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="/major/index">
+                    <i class="fa fa-dashboard"></i> <span>Majors</span> <i
+                        class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/major/index"><i class="fa fa-circle-o"></i> All Major</a></li>
+                    <li><a href="/major/create"><i class="fa fa-circle-o"></i> Add New Major</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="/teacher/index">
+                    <i class="fa fa-dashboard"></i> <span>Teachers</span> <i
+                        class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/teacher/index"><i class="fa fa-circle-o"></i> All Teacher</a></li>
+                    <li><a href="/teacher/create"><i class="fa fa-circle-o"></i> Add New Teacher</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="/user/index">
+                    <i class="fa fa-dashboard"></i> <span>User</span> <i
+                        class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/user/index"><i class="fa fa-circle-o"></i> All User</a></li>
+                    <li><a href="/user/create"><i class="fa fa-circle-o"></i> Add New User</a></li>
                 </ul>
             </li>
         </ul>
     </section>
     <!-- /.sidebar -->
 </aside>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const treeviewItems = document.querySelectorAll('.treeview');
+    const subMenuLinks = document.querySelectorAll('.treeview-menu a');
+
+    // Function to set active menu based on current URL
+    function setActiveMenuFromURL() {
+        const currentPath = window.location.pathname;
+
+        // Remove all active classes first
+        treeviewItems.forEach(item => {
+            item.classList.remove('active');
+        });
+        document.querySelectorAll('.treeview-menu li').forEach(subItem => {
+            subItem.classList.remove('active');
+        });
+
+        // Find and activate the current menu item
+        subMenuLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                const parentTreeview = link.closest('.treeview');
+                const currentSubMenuItem = link.closest('li');
+
+                // Make parent treeview active
+                parentTreeview.classList.add('active');
+
+                // Make current submenu item active
+                currentSubMenuItem.classList.add('active');
+            }
+        });
+    }
+
+    // Set active menu on page load
+    setActiveMenuFromURL();
+
+    // Handle main menu toggle clicks
+    treeviewItems.forEach(item => {
+        const mainLink = item.querySelector('a');
+
+        mainLink.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const parentLi = this.closest('.treeview');
+            const isCurrentlyActive = parentLi.classList.contains('active');
+
+            // Remove active class from all treeview items
+            treeviewItems.forEach(treeItem => {
+                treeItem.classList.remove('active');
+            });
+
+            // Remove active class from all submenu items
+            document.querySelectorAll('.treeview-menu li').forEach(subItem => {
+                subItem.classList.remove('active');
+            });
+
+            // If it wasn't active before, make it active
+            if (!isCurrentlyActive) {
+                parentLi.classList.add('active');
+            }
+        });
+    });
+
+    // Handle submenu item clicks
+    subMenuLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const parentTreeview = this.closest('.treeview');
+            const currentSubMenuItem = this.closest('li');
+
+            // Remove active class from all treeview items
+            treeviewItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Remove active class from all submenu items
+            document.querySelectorAll('.treeview-menu li').forEach(subItem => {
+                subItem.classList.remove('active');
+            });
+
+            // Make parent treeview active
+            parentTreeview.classList.add('active');
+
+            // Make current submenu item active
+            currentSubMenuItem.classList.add('active');
+
+            // Let the browser navigate normally
+        });
+    });
+});
+</script>

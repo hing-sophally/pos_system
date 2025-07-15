@@ -8,9 +8,9 @@
             <div class="box box-success">
                 <div class="box-header">
                     <i class="fa fa-list"></i>
-                    <h3 class="box-title">staff List</h3>
-                    <a href="{% url 'staff_show' %}" class="btn btn-success pull-right">
-                        <i class="fa fa-plus"></i> New staff
+                    <h3 class="box-title">Major List</h3>
+                    <a href="{% url 'major_create' %}" class="btn btn-success pull-right">
+                        <i class="fa fa-plus"></i> New Major
                     </a>
                 </div>
 
@@ -19,46 +19,55 @@
                         <thead>
                             <tr>
                                 <th style="width: 50px;">#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Gender</th>
-                                <th>Date of Birth </th>
-                                <th>Position </th>
-                                <th>Photo</th>
+                                <th>Major Name</th>
+                                <th>Created At</th>
+                                <th>Created By</th>
+                                <th>Updated At</th>
+                                <th>Updated By</th>
                                 <th style="width: 180px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for staff in staffs %}
+                            {% for major in majors %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ staff.first_name }}</td>
-                                    <td>{{ staff.last_name }}</td>
-                                    <td>{{ staff.gender }}</td>
-                                    <td>{{ staff.date_of_birth }}</td>
-                                    <td>{{ staff.position_id }}</td>
+                                    <td>{{ major.SubjectName }}</td>
+                                    <td>{{ major.CreateAt|date:"Y-m-d H:i" }}</td>
                                     <td>
-                                      {% if staff.photo %}
-                                            <img src="{{ staff.photo.url }}" width="50" height="50">
-                                      {% else %}
-                                        <span>No Image</span>
-                                      {% endif %}
+                                        {% if major.CreateBy %}
+                                            {{ major.CreateBy.get_full_name|default:major.CreateBy.username }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
                                     </td>
                                     <td>
-                                        <a href="{% url 'staff_edit' staff.id %}" class="btn btn-xs btn-primary">
+                                        {% if major.UpdateAt %}
+                                            {{ major.UpdateAt|date:"Y-m-d H:i" }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if major.UpdateBy %}
+                                            {{ major.UpdateBy.get_full_name|default:major.UpdateBy.username }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'major_edit' major.id %}" class="btn btn-xs btn-primary">
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
                                         <a href="#"
                                            class="btn btn-xs btn-danger btn-delete"
-                                           data-url="{% url 'staff_delete' staff.id %}">
+                                           data-url="{% url 'major_delete' major.id %}">
                                            <i class="fa fa-trash"></i> Delete
                                         </a>
-
                                     </td>
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="3" class="text-center">No staff found.</td>
+                                    <td colspan="7" class="text-center">No majors found.</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -69,7 +78,8 @@
         </section>
     </div>
 </section>
-    <script>
+
+<script>
 document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll(".btn-delete");
     deleteButtons.forEach(button => {
@@ -96,4 +106,3 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 {% endblock content %}
-

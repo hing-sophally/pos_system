@@ -35,7 +35,7 @@ def staff_create(request):
             position_id=position_id,
             photo=photo,
         )
-        return redirect('index')  # ← redirect to /product/index/
+        return redirect('index_staff')  # ← redirect to /product/index/
 
     return render(request, 'pages/products/create.html', {"staffs": staffs})
 
@@ -68,7 +68,7 @@ def staff_edit(request, id):
             staffs.photo = new_photo
 
         staffs.save()
-        return redirect('index')
+        return redirect('index_staff')
 
     return render(request, 'pages/staffs/edit.html', {'product': staffs, 'staffs': staffs})
 
@@ -76,4 +76,4 @@ def staff_edit(request, id):
 def staff_delete(request, id):
     staffs = get_object_or_404(Staff, id=id)
     staffs.delete()
-    return redirect('index')  # ← redirect to /product/index/
+    return redirect('index_staff')  # ← redirect to /product/index/

@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% block content %}
+<section class="content">
+    <div class="alert alert-danger">
+        <h3>Error Occurred</h3>
+        <p>{{ error_message }}</p>
+        <a href="{% url 'index_major' %}" class="btn btn-primary">Back to Major List</a>
+    </div>
+</section>
+{% endblock %}

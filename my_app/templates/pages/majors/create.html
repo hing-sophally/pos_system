@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <i class="fa fa-plus"></i>
+                    <h3 class="box-title">Create Major</h3>
+                </div>
+                <div class="box-body">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="SubjectName">Major Name</label>
+                            <input type="text" name="SubjectName" id="SubjectName" class="form-control" placeholder="Enter major name" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Create</button>
+                        <a href="{% url 'index_major' %}" class="btn btn-default">Back</a>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock content %}

@@ -1,4 +1,5 @@
 {% extends "index.html" %}
+{% load tz %}
 {% load static %}
 
 {% block content %}
@@ -8,9 +9,9 @@
             <div class="box box-success">
                 <div class="box-header">
                     <i class="fa fa-list"></i>
-                    <h3 class="box-title">staff List</h3>
-                    <a href="{% url 'staff_show' %}" class="btn btn-success pull-right">
-                        <i class="fa fa-plus"></i> New staff
+                    <h3 class="box-title">Teacher List</h3>
+                    <a href="{% url 'teacher_show' %}" class="btn btn-success pull-right">
+                        <i class="fa fa-plus"></i> New Teacher
                     </a>
                 </div>
 
@@ -22,54 +23,73 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Gender</th>
-                                <th>Date of Birth </th>
-                                <th>Position </th>
+                                <th>Date of Birth</th>
+                                <th>Salary</th>
+                                <th>Major</th>
                                 <th>Photo</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
                                 <th style="width: 180px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for staff in staffs %}
+                            {% for teacher in teachers %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ staff.first_name }}</td>
-                                    <td>{{ staff.last_name }}</td>
-                                    <td>{{ staff.gender }}</td>
-                                    <td>{{ staff.date_of_birth }}</td>
-                                    <td>{{ staff.position_id }}</td>
+                                    <td>{{ teacher.firstName }}</td>
+                                    <td>{{ teacher.lastName }}</td>
+                                    <td>{{ teacher.get_gender_display }}</td>
+                                    <td>{{ teacher.dateOfBirth }}</td>
+                                    <td>${{ teacher.salary }}</td>
                                     <td>
-                                      {% if staff.photo %}
-                                            <img src="{{ staff.photo.url }}" width="50" height="50">
-                                      {% else %}
-                                        <span>No Image</span>
-                                      {% endif %}
+                                        {% if teacher.major %}
+                                            {{ teacher.major.SubjectName }}
+                                        {% else %}
+                                            No Major
+                                        {% endif %}
                                     </td>
                                     <td>
-                                        <a href="{% url 'staff_edit' staff.id %}" class="btn btn-xs btn-primary">
+                                        {% if teacher.photo %}
+                                            <img src="{{ teacher.photo.url }}" width="50" height="50" alt="Teacher photo" style="object-fit: cover">
+                                        {% else %}
+                                            <span>No Image</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <small>{{ teacher.createAt|localtime|date:"M d, Y" }}</small><br>
+                                        <small class="text-muted">{{ teacher.createAt|localtime|time:"h:i A" }}</small>
+
+                                    </td>
+                                    <td>
+                                        <small>{{ teacher.updateAt|localtime|date:"M d, Y" }}</small><br>
+                                        <small class="text-muted">{{ teacher.updateAt|localtime|time:"h:i A"  }}</small>
+
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'teacher_edit' teacher.id %}" class="btn btn-xs btn-primary">
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
                                         <a href="#"
                                            class="btn btn-xs btn-danger btn-delete"
-                                           data-url="{% url 'staff_delete' staff.id %}">
+                                           data-url="{% url 'teacher_delete' teacher.id %}">
                                            <i class="fa fa-trash"></i> Delete
                                         </a>
-
                                     </td>
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="3" class="text-center">No staff found.</td>
+                                    <td colspan="11" class="text-center">No teachers found.</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </section>
     </div>
 </section>
-    <script>
+
+<script>
 document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll(".btn-delete");
     deleteButtons.forEach(button => {
@@ -96,4 +116,3 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 {% endblock content %}
-

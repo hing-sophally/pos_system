@@ -32,7 +32,7 @@ def product_create(request):
             category_id=category_id,
             photo=photo
         )
-        return redirect('index')  # ← redirect to /product/index/
+        return redirect('index_product')  # ← redirect to /product/index/
 
     return render(request, 'pages/products/create.html', {"categories": categories})
 
@@ -64,7 +64,7 @@ def product_edit(request, id):
             product.photo = new_photo
 
         product.save()
-        return redirect('index')
+        return redirect('index_product')
 
     return render(request, 'pages/products/edit.html', {'product': product, 'categories': categories})
 
@@ -72,4 +72,4 @@ def product_edit(request, id):
 def product_delete(request, id):
     product = get_object_or_404(Product, id=id)
     product.delete()
-    return redirect('index')  # ← redirect to /product/index/
+    return redirect('index_product')  # ← redirect to /product/index/

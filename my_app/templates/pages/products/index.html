@@ -37,7 +37,7 @@
                                     <td>{{ product.unit_stock }}</td>
                                     <td>
                                       {% if product.photo %}
-                                            <img src="{{ product.photo }}" width="50" height="50">
+                                            <img src="{{ product.photo.url }}" width="50" height="50">
                                       {% else %}
                                         <span>No Image</span>
                                       {% endif %}

@@ -13,7 +13,7 @@ def position_create(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         Position.objects.create(name=name)
-        return redirect('index')  # <-- redirect to route name 'index'
+        return redirect('index_position')  # <-- redirect to route name 'index'
     return render(request, 'pages/positions/create.html')
 
 
@@ -22,11 +22,12 @@ def position_edit(request, id):
     if request.method == 'POST':
         position.name = request.POST.get('name')
         position.save()
-        return redirect('index')
+        return redirect('index_position')
     return render(request, 'pages/positions/edit.html', {'position': position})
 
 
 def position_delete(request, id):
     positions = get_object_or_404(Position, id=id)
     positions.delete()
-    return redirect('index')
+    return redirect('index_position')
+

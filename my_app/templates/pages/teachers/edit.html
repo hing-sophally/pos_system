@@ -1,0 +1,76 @@
+{% extends "index.html" %}
+{% block content %}
+<section class="content">
+    <div class="row">
+        <section class="col-lg-12 connectedSortable">
+            <div class="box box-success">
+                <div class="box-header">
+                    <h3 class="box-title">Edit Teacher Information</h3>
+                </div>
+                <div class="box-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" name="firstName" id="firstName" class="form-control"
+                                   value="{{ teacher.firstName }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" name="lastName" id="lastName" class="form-control"
+                                   value="{{ teacher.lastName }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select name="gender" id="gender" class="form-control" required>
+                                <option value="">-- Select Gender --</option>
+                                <option value="M" {% if teacher.gender == 'M' %}selected{% endif %}>Male</option>
+                                <option value="F" {% if teacher.gender == 'F' %}selected{% endif %}>Female</option>
+                                <option value="O" {% if teacher.gender == 'O' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dateOfBirth">Date of Birth</label>
+                            <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control"
+                                   value="{{ teacher.dateOfBirth|date:'Y-m-d' }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="salary">Salary</label>
+                            <input type="number" name="salary" id="salary" class="form-control"
+                                   value="{{ teacher.salary }}" step="0.01" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="major_id">Major</label>
+                            <select name="major_id" id="major_id" class="form-control">
+                                <option value="">-- Select Major --</option>
+                                {% for major in majors %}
+                                    <option value="{{ major.id }}" {% if teacher.major.id == major.id %}selected{% endif %}>
+                                        {{ major.SubjectName }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="photo">Photo</label><br>
+                            {% if teacher.photo %}
+                                <img src="{{ teacher.photo.url }}" width="80" height="80" class="mb-2"><br>
+                            {% endif %}
+                            <input type="file" name="photo" id="photo" class="form-control">
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <a href="{% url 'index_teacher' %}" class="btn btn-default">Back</a>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock %}
